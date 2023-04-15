@@ -1,0 +1,48 @@
+package com.side.backend.demo;
+
+import com.side.backend.demo.entity.userentity.userinfo.UserInfo;
+import com.side.backend.demo.enumpackage.UserGrade;
+import com.side.backend.demo.repository.UserEntityRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+
+import javax.annotation.PostConstruct;
+
+import static com.side.backend.demo.util.ConsoleTextColor.*;
+
+
+@Slf4j
+@RequiredArgsConstructor
+@SpringBootApplication(exclude = SecurityAutoConfiguration.class)    //	exclude  : 	security dependency delete
+public class SideProjectApplication {
+
+    private final UserEntityRepository repository;
+
+    public static void main(String[] args) {
+        SpringApplication.run(SideProjectApplication.class, args);
+    }
+
+
+    @PostConstruct
+    public void init() {
+
+        log.info(COLOR1 + "init user info setting");
+        UserInfo defaultUserInfo = UserInfo.builder()
+                .userId("test@naver.com")
+                .userPassword("123NOHoo!!")
+                .nickName("nickName")
+                .userName("홍길동")
+                .userPostalCode("111-212")
+                .userDetailAddress("신림동")
+                .phoneNumber("010-1234-1234")
+                .build();
+        log.info(COLOR1 + "user info data setting = {}" + RESET, defaultUserInfo);
+
+        log.info(COLOR2+"spring data jpa insert start");
+        repository.save(defaultUserInfo);
+        log.info(COLOR2+"spring data jpa insert end"+RESET);
+    }
+}
