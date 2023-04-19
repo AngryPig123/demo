@@ -28,7 +28,7 @@ public class SideProjectApplication {
 
     @PostConstruct
     public void init() {
-
+        //  해당 코드는 validator 를 거치지 않는다.
         log.info(COLOR1 + "init user info setting");
         UserInfo defaultUserInfo = UserInfo.builder()
                 .userId("test@naver.com")
@@ -38,6 +38,7 @@ public class SideProjectApplication {
                 .userPostalCode("111-212")
                 .userDetailAddress("신림동")
                 .phoneNumber("010-1234-1234")
+                .userGrade(UserGrade.NORMAL)
                 .build();
         log.info(COLOR1 + "user info data setting = {}" + RESET, defaultUserInfo);
 
