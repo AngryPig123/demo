@@ -1,11 +1,11 @@
-package com.side.backend.demo.dto.userdto;
+package com.side.backend.demo.entity.userentity.userinfo;
 
 
 import javax.persistence.*;
 
 @Entity
 @Table(name="user_detail_info")
-public class UserDetailInfoDTO {
+public class UserDetailInfo {
 
     //    회원가입 정보 테이블
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

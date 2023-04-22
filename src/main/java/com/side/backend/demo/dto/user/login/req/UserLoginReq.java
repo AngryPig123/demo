@@ -1,4 +1,4 @@
-package com.side.backend.demo.controller.vo.req;
+package com.side.backend.demo.dto.user.login.req;
 
 import com.side.backend.demo.validator.password.ValidPassword;
 import com.side.backend.demo.validator.userid.ValidUserId;

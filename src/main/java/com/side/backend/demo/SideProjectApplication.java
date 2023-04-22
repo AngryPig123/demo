@@ -8,8 +8,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.context.MessageSource;
 
 import javax.annotation.PostConstruct;
+
+import java.util.Locale;
 
 import static com.side.backend.demo.util.ConsoleTextColor.*;
 
@@ -20,6 +23,7 @@ import static com.side.backend.demo.util.ConsoleTextColor.*;
 public class SideProjectApplication {
 
     private final UserEntityRepository repository;
+    private final MessageSource messageSource;
 
     public static void main(String[] args) {
         SpringApplication.run(SideProjectApplication.class, args);
@@ -29,7 +33,8 @@ public class SideProjectApplication {
     @PostConstruct
     public void init() {
         //  해당 코드는 validator 를 거치지 않는다.
-        log.info(COLOR1 + "init user info setting");
+
+       /* log.info(COLOR1 + "init user info setting");
         UserInfo defaultUserInfo = UserInfo.builder()
                 .userId("test@naver.com")
                 .userPassword("123NOHoo!!")
@@ -44,6 +49,9 @@ public class SideProjectApplication {
 
         log.info(COLOR2+"spring data jpa insert start");
         repository.save(defaultUserInfo);
-        log.info(COLOR2+"spring data jpa insert end"+RESET);
+        log.info(COLOR2+"spring data jpa insert end"+RESET);*/
+
+//        System.err.println(messageSource.getMessage("test",null, Locale.KOREAN));
+
     }
 }

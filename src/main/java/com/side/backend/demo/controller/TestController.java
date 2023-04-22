@@ -1,5 +1,6 @@
 package com.side.backend.demo.controller;
 
+import com.side.backend.demo.dto.user.info.UserInfoDTO;
 import com.side.backend.demo.entity.userentity.userinfo.UserInfo;
 import com.side.backend.demo.service.user.UserService;
 import com.side.backend.demo.service.user.UserServiceImpl;
@@ -25,7 +26,7 @@ public class TestController {
     @GetMapping("/index")
     public String getTestIndex(Model model) {
 
-        model.addAttribute("userInfo", new UserInfo());
+        model.addAttribute("userInfo", new UserInfoDTO());
         model.addAttribute("title", "title");
         model.addAttribute("data", "test");
         return "/basic/index";
@@ -33,17 +34,17 @@ public class TestController {
 
     @PostMapping("/index")
     public String postTestIndex(
-            @Validated @ModelAttribute("userInfo") UserInfo userInfo,
+            @Validated @ModelAttribute("userInfo") UserInfoDTO userInfo,
             BindingResult bindingResult,
             Model model) {
 
         model.addAttribute("userInfo", userInfo);
-        
+
         if (bindingResult.hasErrors()) {
             return "/basic/index2";
         }
 
-        userService.saveUser(userInfo);
+//        userService.saveUser(userInfo);
         return "/basic/index2";
     }
 

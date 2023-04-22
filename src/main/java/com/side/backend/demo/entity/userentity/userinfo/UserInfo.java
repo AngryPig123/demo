@@ -1,5 +1,6 @@
 package com.side.backend.demo.entity.userentity.userinfo;
 
+import com.side.backend.demo.entity.common.date.UserDateEntity;
 import com.side.backend.demo.enumpackage.UserGrade;
 import com.side.backend.demo.validator.password.ValidPassword;
 import lombok.*;
@@ -8,14 +9,13 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
+@Getter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
-@Getter
-@Setter
 @Table(name = "USER_BASE_INFO")
-public class UserInfo {
+public class UserInfo extends UserDateEntity {
 
     //    회원가입 정보 테이블
     @Id
@@ -50,6 +50,10 @@ public class UserInfo {
     @NotEmpty
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber; //  핸드폰 번호
+
+    @NotEmpty
+    @Column(name = "email", nullable = false, unique = false)
+    private String email;
 
     //  TODO 사용자의 디테일 정보를 저장하고 관계지을 수 있는 설계를 추가한다.
     //    @OneToOne
