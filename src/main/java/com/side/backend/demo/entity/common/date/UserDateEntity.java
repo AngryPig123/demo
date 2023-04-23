@@ -1,9 +1,8 @@
 package com.side.backend.demo.entity.common.date;
 
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import com.side.backend.demo.enumpackage.UserGrade;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 //  유저 컬럼에 들어갈 수 있는 created, updated, last_login 날짜 필드를 셋팅한다.
@@ -19,12 +18,17 @@ public abstract class UserDateEntity {
     @Column(name = "updated_date", updatable = true)
     protected LocalDateTime updateDateTime;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_grade", nullable = false)
+    private UserGrade userGrade;
+
     @PrePersist
     protected void prePersist() {
         LocalDateTime now = LocalDateTime.now();
         createDateTime = now;
         lastLoginDate = now;
         updateDateTime = now;
+        userGrade = UserGrade.NORMAL;
     }
 
     @PreUpdate

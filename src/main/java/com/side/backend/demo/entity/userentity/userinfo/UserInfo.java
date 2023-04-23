@@ -6,6 +6,7 @@ import com.side.backend.demo.validator.password.ValidPassword;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
@@ -22,9 +23,10 @@ public class UserInfo extends UserDateEntity {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;    //  seq number
-    @NotEmpty
+
+    @Email
     @Column(name = "user_id", unique = true, nullable = false)
-    private String userId;  //  아이디
+    private String userId;  //  아이디, email
     @ValidPassword
     @Column(name = "user_password", nullable = false)
     private String userPassword;    //  비밀번호
@@ -38,10 +40,6 @@ public class UserInfo extends UserDateEntity {
     @Column(name = "user_detail_address", nullable = false)
     private String userDetailAddress;   //  상세주소
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "user_grade", nullable = false)
-    private UserGrade userGrade = UserGrade.NORMAL;
-
     //  TODO 핸드폰 본인 인증을 통해 해당 데이터를 받아온다.
     @NotEmpty
     @Column(name = "user_name", nullable = false)
@@ -51,9 +49,33 @@ public class UserInfo extends UserDateEntity {
     @Column(name = "phone_number", nullable = false)
     private String phoneNumber; //  핸드폰 번호
 
-    @NotEmpty
-    @Column(name = "email", nullable = false, unique = false)
-    private String email;
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void setUserPostalCode(String userPostalCode) {
+        this.userPostalCode = userPostalCode;
+    }
+
+    public void setUserDetailAddress(String userDetailAddress) {
+        this.userDetailAddress = userDetailAddress;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
 
     //  TODO 사용자의 디테일 정보를 저장하고 관계지을 수 있는 설계를 추가한다.
     //    @OneToOne

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/head :: head">
+</head>
+
+<body>
+<div class="container">
+    <div th:replace="fragments/header :: header"></div>
+
+    <form th:name="loginForm" th:action="@{/login}" th:object="${userLoginReq}" th:method="post">
+
+        <div class="mb-3">
+            <label for="userId">아이디</label>
+            <input type="text" id="userId" th:field="*{userId}">
+            <div id="userIdValidate" class="text-danger"></div>
+        </div>
+
+        <div class="mb-3">
+            <label for="userPassword">비밀번호</label>
+            <input type="password" id="userPassword" th:field="*{userPassword}">
+            <div id="userPasswordValidate" class="text-danger"></div>
+        </div>
+
+
+        <button id="loginButton" type="submit" class="btn btn-primary">login</button>
+
+    </form>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</div>
+</body>
+
+<script>
+
+    let errorMap;
+
+    document.querySelector("#loginButton").addEventListener(
+        'click', (event) => {
+            event.preventDefault();
+            const payLoad = new FormData(document["loginForm"]);
+
+            if (errorMap !== undefined) cleanErrorFiled(errorMap);
+
+            restProtocol("/login", "POST", payLoad, "json",
+                (data) => {
+                    errorMap = objectToMap(data);
+                    errorMap.forEach((k, v) => {
+                        setErrorField(k, v);
+                    })
+                },
+                (error) => {
+                    // requestFail();
+                },
+                () => {
+                    console.log("finally");
+                }
+            );
+        }
+    )
+
+</script>
+
+</html>

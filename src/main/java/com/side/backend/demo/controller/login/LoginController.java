@@ -6,13 +6,20 @@ import com.jayway.jsonpath.JsonPath;
 import com.side.backend.demo.dto.user.login.req.UserLoginReq;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.side.backend.demo.util.BindingResultUtil.getBindingResultErrorMap;
 
 @Slf4j
 @Controller
@@ -20,19 +27,31 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/login")
 public class LoginController {
 
-//    private final UserLoginService userLoginService;
+    //    private final UserLoginService userLoginService;
     private final ObjectMapper objectMapper;  //    qwer
 
-    @ResponseBody
-    @PostMapping("/user")
-    public Object userLogin(@RequestBody @Validated UserLoginReq userLoginReq, BindingResult bindingResult) throws JsonProcessingException {
+    @GetMapping
+    public String getUserLoginPage(Model model) {
+        model.addAttribute("userLoginReq", new UserLoginReq());
+        return "/common/login";
+    }
 
-        if(bindingResult.hasErrors()){
-            return JsonPath.parse(objectMapper.writeValueAsString(bindingResult.getAllErrors())).read("$..defaultMessage");
+    @PostMapping
+    @ResponseBody
+    public ResponseEntity<Object> userLogin(
+            @Validated @ModelAttribute("userLoginReq") UserLoginReq userLoginReq,
+            BindingResult bindingResult
+    ) {
+
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body(getBindingResultErrorMap(bindingResult));
         }
 
-        return userLoginReq;
-
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(userLoginReq);
     }
 
 }

@@ -3,7 +3,10 @@ package com.side.backend.demo.dto.user.info;
 import com.side.backend.demo.validator.password.ValidPassword;
 import com.side.backend.demo.validator.phonenumber.ValidPhoneNumber;
 import com.side.backend.demo.validator.userid.ValidUserId;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -11,8 +14,12 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserInfoDTO {
 
+    @Email
     @ValidUserId
     private String userId;  //  아이디
     @ValidPassword
@@ -37,7 +44,5 @@ public class UserInfoDTO {
     @ValidPhoneNumber
     private String phoneNumber; //  핸드폰 번호
 
-    @Email(message = "유요한 이메일 주소가 아닙니다.")
-    private String email;
 
 }
