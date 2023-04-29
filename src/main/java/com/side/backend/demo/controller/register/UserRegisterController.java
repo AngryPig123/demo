@@ -35,18 +35,21 @@ public class UserRegisterController {
     @PostMapping
     public String postUserRegisterPage(
             @Validated @ModelAttribute("userInfoDto") UserInfoDto userInfoDto,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            Model model
     ) {
+        if (bindingResult.hasErrors()) return "/common/register";
 
-        log.info("userInfoDto = {}", userInfoDto);
-
-        if (bindingResult.hasErrors()) {
-            return "/common/register";
+        if (userInfoService.registerUser(userInfoDto)) {
+            //  회원가입 성공.
+            model.addAttribute("status", "ok");
+        } else {
+            //  회원가입 실패.
+            model.addAttribute("status", "fail");
         }
 
-        userInfoService.registerUser(userInfoDto);
+        return "redirect:/login";
 
-        return "/index";
     }
 
 }
