@@ -6,10 +6,12 @@ import lombok.*;
 import javax.validation.constraints.*;
 import java.util.Optional;
 
-@ToString
 @Setter
 @Getter
+@Builder
+@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserInfoDto implements CommonUserValidService {
 
     @Size(min = 1, max = 20, message = "{user.info.validation.firstname.message}")

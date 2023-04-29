@@ -1,8 +1,6 @@
 package com.side.backend.demo.dto.login.req;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -11,7 +9,9 @@ import javax.validation.constraints.Size;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserLoginReq {
 
     @NotEmpty(message = "{user.info.validation.email.message}")
