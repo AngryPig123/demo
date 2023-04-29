@@ -32,13 +32,12 @@ public class UserLoginController {
     ) {
 
         if (bindingResult.hasErrors()) return "/common/login";
-
         if (userInfoService.userLogin(userLoginReq)) {
             return "index";
         } else {
+            bindingResult.rejectValue("userPassword","user.login.validation");
             return "/common/login";
         }
-
     }
 
 }

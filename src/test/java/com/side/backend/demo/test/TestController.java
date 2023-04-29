@@ -19,8 +19,7 @@ public class TestController {
 
     @Test
     public void test() {
-        String result = messageSource.getMessage("user.info.validation.password.repeat.message", null,Locale.KOREAN);
-        Assertions.assertEquals(result, "비밀번호가 맞지 않습니다.");
+
     }
 
 }

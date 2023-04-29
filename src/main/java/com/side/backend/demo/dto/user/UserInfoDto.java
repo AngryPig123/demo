@@ -10,7 +10,7 @@ import java.util.Optional;
 @Setter
 @Getter
 @NoArgsConstructor
-public class UserInfoDto {
+public class UserInfoDto implements CommonUserValidService {
 
     @Size(min = 1, max = 20, message = "{user.info.validation.firstname.message}")
     private String firstName;
@@ -28,5 +28,15 @@ public class UserInfoDto {
             message = "{user.info.validation.password.regex.message}"
     )
     private String userPassword; //  비밀번호
+
+    private String repeatPassword;
+
+    @Override
+    public boolean isPasswordValid() {
+        return Optional
+                .ofNullable(this.userPassword)
+                .map(password -> password.equals(this.repeatPassword))
+                .orElse(false);
+    }
 
 }

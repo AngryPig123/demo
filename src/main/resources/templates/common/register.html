@@ -72,25 +72,26 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <input
+                                            th:field="*{repeatPassword}"
                                             type="password" class="form-control form-control-user"
                                             id="repeatPassword" placeholder="Repeat Password">
                                 </div>
                             </div>
 
-                            <!-- password validate or ${#fields.hasErrors('repeatPassword')}-->
+                            <!-- password validate -->
                             <div class="form-group row"
-                                 th:if="${#fields.hasErrors('userPassword')}"
+                                 th:if="${#fields.hasErrors('userPassword')} or ${#fields.hasErrors('passwordValid')}"
                             >
-                                <!--                                or ${#fields.hasErrors('passwordValid')}-->
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <p class="text-danger h6" th:if="${#fields.hasErrors('userPassword')}"
+                                    <p class="text-danger h6"
+                                       th:if="${#fields.hasErrors('userPassword')}"
                                        th:errors="*{userPassword}"></p>
                                 </div>
 
-                                <!--                                <div class="col-sm-6">-->
-                                <!--                                    <p class="text-danger h6" th:if="${#fields.hasErrors('passwordValid')}"-->
-                                <!--                                       th:errors="*{passwordValid}"></p>-->
-                                <!--                                </div>-->
+                                <div class="col-sm-6">
+                                    <p class="text-danger h6" th:if="${#fields.hasErrors('passwordValid')}"
+                                       th:errors="*{passwordValid}"></p>
+                                </div>
 
                             </div>
 

@@ -38,13 +38,15 @@ public class UserRegisterController {
             BindingResult bindingResult,
             Model model
     ) {
+
+        if (!userInfoDto.isPasswordValid())
+            bindingResult.rejectValue("passwordValid", "user.info.validation.password.repeat.message");
+
         if (bindingResult.hasErrors()) return "/common/register";
 
         if (userInfoService.registerUser(userInfoDto)) {
-            //  회원가입 성공.
             model.addAttribute("status", "ok");
         } else {
-            //  회원가입 실패.
             model.addAttribute("status", "fail");
         }
 
