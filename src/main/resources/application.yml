@@ -1,8 +1,9 @@
 spring:
-#  config:
-#    name: properties-config
-#    location: classpath:/properties/
+  #  config:
+  #    name: properties-config
+  #    location: classpath:/properties/
   profiles:
     active: database, jpa, server
   messages:
     basename: messages/messages
+    encoding: UTF-8

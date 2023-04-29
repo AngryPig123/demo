@@ -26,6 +26,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("com.jayway.jsonpath:json-path:2.7.0")
+	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 //	validator java+kotlin @Required
 	implementation("org.hibernate.validator:hibernate-validator")

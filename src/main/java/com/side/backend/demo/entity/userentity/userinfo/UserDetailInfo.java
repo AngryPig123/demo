@@ -12,6 +12,5 @@ public class UserDetailInfo {
     @Column(name="user_detail_info_id")
     private Long id;
 
-
 }
 

@@ -2,22 +2,28 @@ const requestFail = () => {
     alert("알 수 없는 이유로 통신에 실패하였습니다. 관리자에게 문의하세요.");
 }
 
-const restProtocol = (url, method, payLoad, dataType = "json", thenMethod, catchMethod, finallyMethod) => {
+const restProtocol = (url, method, payLoad, dataType = "json", thenMethod, catchMethod, finallyMethod, successUrl) => {
 
     fetch(url, {
         method: method,
         body: payLoad,
     })
         .then((response) => {
-            if (dataType === "json") {
-                return response.json()
-            } else if (dataType === "text") {
-                return response.text;
-            } else if (dataType === "blob") {
-                return response.blob
+
+            if (response.status !== 200) {
+                if (dataType === "json") {
+                    return response.json()
+                } else if (dataType === "text") {
+                    return response.text;
+                } else if (dataType === "blob") {
+                    return response.blob
+                } else {
+                    return response.formData;
+                }
             } else {
-                return response.formData;
+                location.href = successUrl;
             }
+
         })
         .then((data) =>
             thenMethod(data)
