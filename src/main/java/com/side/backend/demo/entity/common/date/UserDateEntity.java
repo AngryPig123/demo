@@ -1,11 +1,16 @@
 package com.side.backend.demo.entity.common.date;
 
 import com.side.backend.demo.enumpackage.UserGrade;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 //  유저 컬럼에 들어갈 수 있는 created, updated, last_login 날짜 필드를 셋팅한다.
+
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class UserDateEntity {
 

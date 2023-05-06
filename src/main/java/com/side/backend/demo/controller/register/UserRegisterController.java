@@ -3,8 +3,10 @@ package com.side.backend.demo.controller.register;
 
 import com.side.backend.demo.dto.user.UserInfoDto;
 import com.side.backend.demo.service.UserInfoService;
+import com.side.backend.demo.util.message.MyMessageSource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Locale;
 
+import static com.side.backend.demo.util.message.MyMessageSource.*;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -25,7 +29,7 @@ import java.util.Locale;
 public class UserRegisterController {
 
     private final UserInfoService userInfoService;
-
+    private final MyMessageSource myMessageSource;
     @GetMapping
     public String getUserRegisterPage(Model model) {
         model.addAttribute("userInfoDto", new UserInfoDto());
@@ -39,17 +43,18 @@ public class UserRegisterController {
             Model model
     ) {
 
+        boolean userEmailDuplicateValidate = userInfoService.registerUser(userInfoDto);
+
         if (!userInfoDto.isPasswordValid())
             bindingResult.rejectValue("passwordValid", "user.info.validation.password.repeat.message");
 
-        if (bindingResult.hasErrors()) return "/common/register";
-
-        if (userInfoService.registerUser(userInfoDto)) {
-            model.addAttribute("status", "ok");
-        } else {
-            model.addAttribute("status", "fail");
+        if (!userEmailDuplicateValidate) {
+            model.addAttribute("emailValid", myMessageSource.getMessage("user.info.validation.email.duplicate.message"));
         }
 
+        if (bindingResult.hasErrors()) return "/common/register";
+
+        model.addAttribute("status", "ok");
         return "redirect:/login";
 
     }

@@ -5,5 +5,11 @@ import com.side.backend.demo.dto.user.UserInfoDto;
 
 public interface UserInfoService {
     boolean registerUser(UserInfoDto userInfoDto);
+
     boolean userLogin(UserLoginReq userLoginReq);
+
+    boolean userEmailAddressExistCheck(String userEmailAddress);
+
+    boolean deleteUser(UserLoginReq userLoginReq);
+
 }

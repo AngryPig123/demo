@@ -28,14 +28,19 @@ public class UserLoginController {
     @PostMapping
     public String postUserLoginPage(
             @Validated @ModelAttribute("userLoginReq") UserLoginReq userLoginReq,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            Model model
     ) {
 
-        if (bindingResult.hasErrors()) return "/common/login";
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("bindingResult", bindingResult);
+            return "/common/login";
+        }
         if (userInfoService.userLogin(userLoginReq)) {
             return "index";
         } else {
-            bindingResult.rejectValue("userPassword","user.login.validation");
+            bindingResult.rejectValue("userPassword", "user.login.validation");
+            model.addAttribute("bindingResult", bindingResult);
             return "/common/login";
         }
     }
