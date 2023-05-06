@@ -37,7 +37,7 @@ public class UserLoginController {
             return "/common/login";
         }
         if (userInfoService.userLogin(userLoginReq)) {
-            return "index";
+            return "redirect:/";
         } else {
             bindingResult.rejectValue("userPassword", "user.login.validation");
             model.addAttribute("bindingResult", bindingResult);
