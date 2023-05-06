@@ -3,7 +3,7 @@ spring:
   #    name: properties-config
   #    location: classpath:/properties/
   profiles:
-    active: database, jpa, server
+    active: database, jpa, server, security
   messages:
     basename: messages/messages
     encoding: UTF-8

@@ -2,16 +2,14 @@ package com.side.backend.demo.test.contoller;
 
 import com.side.backend.demo.test.ControllerTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -28,17 +26,32 @@ public class LoginControllerTest extends ControllerTestBase {
     public class LoginSuccessTest {
         @Test
         void loginSuccess() throws Exception {
+
+            //  login success
             MvcResult mvcResult = mockMvc.perform(
                             post("/login")
                                     .param("userEmailAddress", initUserEmail)
                                     .param("userPassword", initUserPassword)
                     )
+                    .andExpect(status().is3xxRedirection())
+                    .andReturn();
+
+            HttpServletResponse response = mvcResult.getResponse();
+            String redirectUrl = response.getHeader("Location");
+            Assertions.assertEquals("/", redirectUrl, "fail");
+
+            //  redirect check
+            assert redirectUrl != null;
+            MvcResult redirectMvcResult = mockMvc.perform(
+                            get(redirectUrl)
+                    )
                     .andExpect(status().isOk())
                     .andReturn();
-            ModelAndView modelAndView = mvcResult.getModelAndView();
-            String viewName = modelAndView != null ? modelAndView.getViewName() : null;
-            Assertions.assertEquals(viewName, "index", "fail");
-            Assertions.assertNotEquals(viewName, "nomatchViewName", "fail");
+            ModelAndView modelAndView = redirectMvcResult.getModelAndView();
+            assert modelAndView != null;
+            String viewName = modelAndView.getViewName();
+            Assertions.assertEquals("index", viewName, "fail");
+
         }
 
     }
