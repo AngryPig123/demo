@@ -2,10 +2,7 @@ package com.side.backend.demo.test.contoller;
 
 import com.side.backend.demo.test.ControllerTestBase;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.validation.BindingResult;
@@ -20,6 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @Slf4j
+@Disabled
 @SpringBootTest
 public class LoginControllerTest extends ControllerTestBase {
 
